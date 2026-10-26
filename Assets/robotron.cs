@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using UnityEngine; 
 using UnityEngine.InputSystem;
 
 public class LutadorControle : MonoBehaviour
@@ -9,7 +9,7 @@ public class LutadorControle : MonoBehaviour
     [SerializeField] private InputAction andar_Frente;
     [SerializeField] private InputAction andar_tras;
     void Start()
-    {
+    { 
         ataque.Enable();
         andar_Frente.Enable();
         andar_tras.Enable();
