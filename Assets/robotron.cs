@@ -1,21 +1,27 @@
+
 using System;
-using UnityEngine; 
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LutadorControle : MonoBehaviour
 {
+    private const string robotron = "PunchTrigger";
     [SerializeField] private Animator animatorLutador;
     [SerializeField] private InputAction ataque;
     [SerializeField] private InputAction andar_Frente;
     [SerializeField] private InputAction andar_tras;
+
     void Start()
-    { 
+    {
         ataque.Enable();
         andar_Frente.Enable();
         andar_tras.Enable();
+
         ataque.performed += Atacar;
+
         andar_Frente.performed += Andar;
         andar_tras.performed += AndarT;
+
         andar_Frente.canceled += Parar;
         andar_tras.canceled += ParaT;
     }
@@ -33,19 +39,30 @@ public class LutadorControle : MonoBehaviour
     private void OnDestroy()
     {
         ataque.performed -= Atacar;
-        andar_Frente.canceled -= Andar;
 
+        andar_Frente.performed -= Andar;
+        andar_tras.performed -= AndarT;
+
+        andar_Frente.canceled -= Parar;
+        andar_tras.canceled -= ParaT;
+
+        ataque.Disable();
+        andar_Frente.Disable();
+        andar_tras.Disable();
     }
+
     public void Atacar(InputAction.CallbackContext context)
     {
-        animatorLutador.SetTrigger("PunchTrigger");
+        animatorLutador.SetTrigger(robotron);
         Debug.Log("Atacando");
     }
+
     public void Andar(InputAction.CallbackContext context)
     {
         animatorLutador.SetBool("Walk Forward", true);
         Debug.Log("andando");
     }
+
     public void AndarT(InputAction.CallbackContext context)
     {
         animatorLutador.SetBool("Walk Backward", true);
